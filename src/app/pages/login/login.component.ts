@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { BG_IMG_URL, LOGO_URL } from '../../constants/config';
+import { BG_IMG_URL} from '../../constants/config';
 import { HeaderComponent } from "../../components/header/header.component";
 import { FormsModule } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
@@ -35,7 +35,7 @@ import { ToastrService } from 'ngx-toastr';
   imports: [CommonModule, HeaderComponent, FormsModule]
 })
 export class LoginComponent {
-  logoUrl = LOGO_URL;
+  
   bgUrl = BG_IMG_URL;
 
   email!: string;
