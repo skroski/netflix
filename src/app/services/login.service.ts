@@ -10,4 +10,10 @@ export class LoginService {
     //aqui vamos chamar a api de backend  fake depois implementamos produção
     localStorage.setItem("token", Math.random()+"")
   }
+  get isLoggedIn(){
+    if (localStorage.getItem("token")) {
+      return true;
+    }
+    return false;
+  }
 }

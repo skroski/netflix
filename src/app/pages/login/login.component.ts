@@ -5,11 +5,12 @@ import { HeaderComponent } from "../../components/header/header.component";
 import { FormsModule } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
-    selector: 'app-login',
-    standalone: true,
-    template: `
+  selector: 'app-login',
+  standalone: true,
+  template: `
     <div class="h-screen" [ngStyle]="{ 'background-image': 'url(' + bgUrl + ')' }">
     <app-header></app-header>
       <div class="login-container">
@@ -30,8 +31,8 @@ import { Router } from '@angular/router';
       </div>
     </div>
   `,
-    styleUrl: './login.component.scss',
-    imports: [CommonModule, HeaderComponent, FormsModule]
+  styleUrl: './login.component.scss',
+  imports: [CommonModule, HeaderComponent, FormsModule]
 })
 export class LoginComponent {
   logoUrl = LOGO_URL;
@@ -41,19 +42,29 @@ export class LoginComponent {
   password!: string;
 
   loginService = inject(LoginService);
-  router = inject(Router)
+  router = inject(Router);
+  toastrService = inject(ToastrService)
+  ngOnInit(): void {
+    if (this.loginService.isLoggedIn) {
+      this.router.navigateByUrl('/browse')
+    }
 
-  onSubmit(){
+  }
+
+  onSubmit() {
     //validate email and password
     if (!this.email || this.password) {
-      alert("digite email ou senha")
+      this.toastrService.error("digite email ou senha")
       return
     }
-    console.log(this.email,this.password);
+    console.log(this.email, this.password);
     // se email e senha estiver correto vamos logar o usuario
     this.loginService.login(this.email, this.password);
     // agora o usuario está logado e podemos direcionar para o dashboard do sistema.
+    this.toastrService.success("Sucesso ao logar no netflix")
     this.router.navigateByUrl('/browse')
   }
+
+
 
 }
